@@ -9,13 +9,13 @@ import { school } from "@/config/school";
 export const Route = createFileRoute("/a-propos")({
   head: () => ({
     meta: [
-      { title: "À propos — Ecole Secour d'en haut de puit-sales" },
+      { title: "À propos — École Secour d'en haut" },
       {
         name: "description",
         content:
-          "Présentation de l'Ecole Secour d'en haut de puit-sales : notre école, notre mission, notre vision et nos valeurs.",
+          "Présentation de l'école, de sa mission, de sa vision et des valeurs qui portent son projet éducatif.",
       },
-      { property: "og:title", content: "À propos — Ecole Secour d'en haut de puit-sales" },
+      { property: "og:title", content: "À propos — École Secour d'en haut" },
       {
         property: "og:description",
         content: "Notre école, notre mission, notre vision et nos valeurs.",
@@ -33,18 +33,17 @@ function AProposPage() {
       <PageHero
         eyebrow="À propos"
         title="Notre école"
-        description="Cette page présentera l'histoire, la mission et les engagements de l'établissement. Les textes ci-dessous sont provisoires."
+        description="Une école qui place l'élève, la discipline et le développement personnel au cœur de son projet éducatif."
       />
 
       <section className="mx-auto grid max-w-6xl gap-10 px-4 py-14 lg:grid-cols-2">
         <div>
           <SectionHeading title="Notre école" />
           <p className="mt-4 text-sm text-muted-foreground">
-            Ajoutez ici la présentation officielle de l'établissement : sa création, son
-            implantation à Puit-Sales, son organisation et le nombre de classes accueillies.
+            L'établissement accueille les élèves dans un cadre structurant, avec une attention particulière à la qualité de l'enseignement, au respect des valeurs et au bien-être de chacun.
           </p>
           <p className="mt-3 text-sm text-muted-foreground">
-            Ce texte est un contenu provisoire, prévu pour être remplacé par la direction.
+            La mission de l'école est de former des jeunes responsables, curieux, disciplinés et prêts à affronter les défis de demain.
           </p>
         </div>
         <div className="overflow-hidden rounded-xl border border-border">
@@ -62,12 +61,10 @@ function AProposPage() {
       <section className="border-y border-border bg-secondary/50">
         <div className="mx-auto grid max-w-6xl gap-4 px-4 py-14 md:grid-cols-2">
           <InfoCard icon={Target} title="Notre mission">
-            Ajoutez ici la mission éducative officielle de l'école : les savoirs transmis,
-            l'accompagnement des élèves et le rôle de l'établissement dans la communauté.
+            Favoriser la réussite scolaire, le développement des compétences et l'épanouissement de chaque élève dans un cadre bienveillant et exigeant.
           </InfoCard>
           <InfoCard icon={Compass} title="Notre vision">
-            Ajoutez ici la vision de l'école pour les prochaines années : projets, développement et
-            objectifs pédagogiques.
+            Construire une école de qualité, ouverte sur les besoins des familles et engagée dans la réussite de ses élèves.
           </InfoCard>
         </div>
       </section>
@@ -76,7 +73,7 @@ function AProposPage() {
         <SectionHeading
           eyebrow="Nos valeurs"
           title="Les valeurs que nous voulons transmettre"
-          description="Ces valeurs sont proposées à titre indicatif et doivent être confirmées par la direction."
+          description="Des principes qui guident la vie scolaire et l'accompagnement des élèves."
         />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SCHOOL_VALUES.map((value) => (

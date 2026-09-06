@@ -1,262 +1,45 @@
-# School Connect
+# École Secour d'en haut
 
-Ecole Secour d'en haut de puit-sales — School Management System
+This project is a simple public website for a school. It is designed to present the school to families, parents, and visitors without any account, login, or member area.
 
-Build the initial production-quality foundation of a full-stack School Management System (SMS) for a school named:
+## Purpose
 
-Ecole Secour d'en haut de puit-sales
+The site includes:
 
-This is the first Agile sprint of a larger long-term project. Do NOT attempt to build the entire school management system yet. The goal of this sprint is to establish a clean, scalable, secure foundation that we can extend incrementally in future sprints.
+- school presentation and values
+- sections and study levels
+- admission information
+- school life and events
+- photo gallery
+- contact page for families
 
-The application must be fully functional at the end of this sprint.
+## Stack
 
-1. Project vision
+- React + TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- TanStack Router
 
-This platform will eventually allow:
+## Project direction
 
-Students to apply/register for the school online.
+This is not a management system with student accounts or staff access. It is intentionally a public-facing website only.
 
-Students to manage their profiles.
+The goal is to keep the app simple, clear, and easy to maintain while providing useful information for prospective families and visitors.
 
-Students to upload required admission documents.
+## Main pages
 
-Students to view assignments, grades, averages, attendance, payments, and notifications.
+- Home
+- About the school
+- Sections
+- Admissions
+- School life
+- Gallery
+- Contact
 
-Teachers to manage their classes, assignments, grades, attendance, and communication with students.
+## Notes
 
-Parents to monitor their children's academic information.
-
-School administrators to manage students, teachers, classes, admissions, finances, announcements, and reports.
-
-System administrators/developers to monitor the technical health of the platform, users, logs, analytics, and system activity.
-
-However, only the foundation described in this prompt should be implemented now.
-
-Future functionality will be added through Agile sprints.
-
-2. Technology stack
-
-Use the standard Lovable full-stack architecture with:
-
-React / TypeScript
-
-Tailwind CSS
-
-shadcn/ui
-
-Supabase
-
-PostgreSQL
-
-Supabase Authentication
-
-Supabase Storage where appropriate
-
-Modern responsive design
-
-Component-based architecture
-
-Keep the architecture modular so future features can be added without rewriting the existing system.
-
-Do not introduce unnecessary microservices at this stage. Start with a well-structured modular monolith.
-
-3. Core design principles
-
-The project must follow these principles:
-
-Clean architecture
-
-Separation of concerns
-
-Reusable components
-
-Strong TypeScript typing
-
-Secure authentication
-
-Role-Based Access Control (RBAC)
-
-Database-driven application
-
-Responsive design
-
-Accessibility
-
-Secure handling of sensitive student information
-
-Input validation
-
-Proper error handling
-
-Loading states
-
-Empty states
-
-Consistent UI
-
-Maintainable code
-
-Scalable database structure
-
-Do not hard-code information that should eventually come from the database.
-
-4. User roles
-
-Create the architecture for these roles:
-
-STUDENT
-
-Students will eventually be able to:
-
-View their profile
-
-View classes
-
-View assignments
-
-View grades
-
-View averages
-
-View attendance
-
-View payments
-
-View notifications
-
-Communicate with teachers
-
-TEACHER
-
-Teachers will eventually be able to:
-
-Manage assigned classes
-
-View students
-
-Create assignments
-
-Grade assignments
-
-Manage attendance
-
-Publish grades
-
-Communicate with students
-
-PARENT
-
-Parents will eventually be able to:
-
-View their children's academic information
-
-View grades
-
-View attendance
-
-View assignments
-
-View payments
-
-Receive school notifications
-
-ADMIN
-
-School administrators will eventually be able to:
-
-Manage students
-
-Manage teachers
-
-Manage classes
-
-Manage subjects
-
-Review admission applications
-
-Manage announcements
-
-Manage payments
-
-View reports
-
-Manage school data
-
-SUPER_ADMIN
-
-A higher-level administrative role with broader permissions.
-
-SYSTEM_ADMIN
-
-Technical administration/developer role for:
-
-System monitoring
-
-User statistics
-
-Audit logs
-
-Technical logs
-
-System health
-
-Error monitoring
-
-Platform configuration
-
-For this first sprint, implement the foundation for RBAC but only make the main dashboards functional for:
-
-STUDENT
-
-TEACHER
-
-ADMIN
-
-SYSTEM_ADMIN
-
-Keep PARENT and SUPER_ADMIN available in the architecture for future sprints.
-
-5. Authentication
-
-Implement a proper authentication system using Supabase Authentication.
-
-Include:
-
-Login
-
-Logout
-
-Password reset
-
-Protected routes
-
-Session persistence
-
-Authentication state handling
-
-Unauthorized access handling
-
-Loading states during authentication
-
-The system must prevent unauthenticated users from accessing private dashboards.
-
-Do not store passwords manually in the application's database.
-
-6. Role-Based Access Control
-
-Implement proper RBAC.
-
-A user's role must determine what they can access.
-
-For example:
-
-A STUDENT must not be able to access:
-
-Admin dashboard
-
-Teacher dashboard
-
-System administration dashboard
+The content is currently a public-facing starter, and some details such as address, phone number, and contact information may need to be confirmed with the school before publication.
 
 A TEACHER must not automatically have administrative permissions.
 

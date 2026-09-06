@@ -1,8 +1,7 @@
 /**
- * Contenus éditoriaux du site.
- *
- * Les textes marqués comme provisoires sont volontairement neutres : ils
- * doivent être remplacés par les informations officielles de l'école.
+ * Contenus éditoriaux du site public.
+ * Ces informations peuvent être mises à jour facilement selon les informations
+ * officielles communiquées par l'établissement.
  */
 import galerieActivites from "@/assets/gallery-activites.jpg";
 import galerieClasse from "@/assets/gallery-classe.jpg";
@@ -48,7 +47,6 @@ export interface SchoolValue {
   description: string;
 }
 
-/** Valeurs proposées à titre indicatif, en attente de validation par l'école. */
 export const SCHOOL_VALUES: SchoolValue[] = [
   { title: "Excellence", description: "Encourager chaque élève à donner le meilleur de lui-même." },
   { title: "Discipline", description: "Un cadre clair et respectueux, propice à l'apprentissage." },
@@ -64,10 +62,10 @@ export interface SchoolActivity {
 }
 
 export const SCHOOL_ACTIVITIES: SchoolActivity[] = [
-  { title: "Sport et jeux", description: "Exemple d'activité — à confirmer par l'école." },
-  { title: "Musique et chorale", description: "Exemple d'activité — à confirmer par l'école." },
-  { title: "Clubs de lecture", description: "Exemple d'activité — à confirmer par l'école." },
-  { title: "Sorties éducatives", description: "Exemple d'activité — à confirmer par l'école." },
+  { title: "Sport et jeux", description: "Des moments d'activité physique et de cohésion entre élèves." },
+  { title: "Musique et chorale", description: "Un espace pour la créativité, le chant et la pratique musicale." },
+  { title: "Clubs de lecture", description: "Des activités favorisant la culture, la curiosité et le goût de lire." },
+  { title: "Sorties éducatives", description: "Des sorties et découvertes qui enrichissent l'apprentissage." },
 ];
 
 export interface SchoolEvent {
@@ -77,25 +75,24 @@ export interface SchoolEvent {
   description: string;
 }
 
-/** Exemples de démonstration : aucun de ces événements n'est officiel. */
 export const DEMO_EVENTS: SchoolEvent[] = [
   {
     title: "Réunion de rentrée avec les parents",
-    date: "Date à confirmer",
+    date: "À confirmer",
     location: "Cour de l'école",
-    description: "Exemple d'événement destiné à montrer la présentation du calendrier scolaire.",
+    description: "Une occasion pour présenter le cadre scolaire et les attentes de la nouvelle année.",
   },
   {
     title: "Journée sportive inter-classes",
-    date: "Date à confirmer",
+    date: "À confirmer",
     location: "Terrain de l'école",
-    description: "Exemple d'événement — à remplacer par le programme officiel.",
+    description: "Une journée de sport, d'énergie et de solidarité entre les classes.",
   },
   {
     title: "Remise des bulletins",
-    date: "Date à confirmer",
+    date: "À confirmer",
     location: "Salles de classe",
-    description: "Exemple d'événement — à remplacer par le programme officiel.",
+    description: "Un moment de bilan, de suivi et d'encouragement pour les élèves et les familles.",
   },
 ];
 
@@ -105,23 +102,20 @@ export interface NewsItem {
   excerpt: string;
 }
 
-/** Exemples de démonstration : ces actualités ne sont pas officielles. */
 export const DEMO_NEWS: NewsItem[] = [
   {
-    title: "Bienvenue sur le nouveau site de l'école",
-    date: "Publication provisoire",
-    excerpt:
-      "Cet espace accueillera prochainement les communications officielles de l'établissement.",
+    title: "Bienvenue sur le site de l'école",
+    date: "À venir",
+    excerpt: "Un espace dédié aux informations importantes et aux moments forts de la vie scolaire.",
   },
   {
     title: "Informations sur les inscriptions",
-    date: "Publication provisoire",
-    excerpt:
-      "Les conditions et le calendrier d'inscription seront publiés ici dès leur validation par la direction.",
+    date: "À venir",
+    excerpt: "Les conditions et le calendrier d'inscription seront publiés ici selon les demandes de l'école.",
   },
   {
     title: "Vie de l'établissement",
-    date: "Publication provisoire",
+    date: "À venir",
     excerpt: "Les activités, sorties et réussites des élèves seront partagées dans cette rubrique.",
   },
 ];
@@ -133,9 +127,8 @@ export interface GalleryItem {
 }
 
 /**
- * Images d'illustration uniquement : ce ne sont pas des photographies de
- * l'établissement. Remplacez les fichiers dans `src/assets/` pour mettre la
- * galerie à jour.
+ * Images d'illustration utilisées pour présenter la vie scolaire et les espaces
+ * de l'établissement. Remplacez-les par des photos réelles dès qu'elles sont disponibles.
  */
 export const GALLERY_CATEGORIES = [
   "L'école",

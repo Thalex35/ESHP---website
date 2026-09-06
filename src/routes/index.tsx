@@ -23,17 +23,17 @@ import { school } from "@/config/school";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Ecole Secour d'en haut de puit-sales | Éducation et formation" },
+      { title: "École Secour d'en haut | Éducation et formation" },
       {
         name: "description",
         content:
-          "Site officiel de l'Ecole Secour d'en haut de puit-sales : sections préscolaire, fondamentale et secondaire, admissions, vie scolaire et contact.",
+          "Découvrez l'école, ses sections, les informations d'admission et les moyens de nous contacter.",
       },
-      { property: "og:title", content: "Ecole Secour d'en haut de puit-sales" },
+      { property: "og:title", content: "École Secour d'en haut" },
       {
         property: "og:description",
         content:
-          "Former, accompagner et préparer les jeunes pour l'avenir. Découvrez l'école, ses sections et ses admissions.",
+          "Former, accompagner et préparer les jeunes pour l'avenir. Découvrez l'école, ses sections et les admissions.",
       },
       { property: "og:url", content: "/" },
     ],
@@ -51,7 +51,7 @@ function AccueilPage() {
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 lg:grid-cols-2 lg:py-20">
           <div className="animate-fade-up">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              Site officiel de l'établissement
+              Présentation de l'établissement
             </p>
             <h1 className="mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
               {school.name}
@@ -82,17 +82,17 @@ function AccueilPage() {
         <SectionHeading
           eyebrow="Notre école"
           title="Un établissement au service des familles"
-          description="Ajoutez ici la présentation officielle de l'établissement : son histoire, son encadrement et sa place dans la communauté. Ce texte est provisoire."
+          description="Une école qui accompagne chaque élève dans son développement, sa formation et son avenir."
         />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <InfoCard icon={BookOpen} title="Un parcours complet">
-            De la maternelle à la NS4, deux sections structurent la scolarité des élèves.
+            De la maternelle à la NS4, les élèves bénéficient d'un cadre structurant et d'un enseignement de qualité.
           </InfoCard>
           <InfoCard icon={Users} title="Un accompagnement de proximité">
-            Texte provisoire décrivant le suivi des élèves et le dialogue avec les familles.
+            Nous mettons l'accent sur le dialogue avec les familles et le suivi de chaque élève.
           </InfoCard>
           <InfoCard icon={GraduationCap} title="Préparation aux examens">
-            Texte provisoire à remplacer par les informations officielles de la direction.
+            L'école vise la réussite scolaire, la discipline et le développement des compétences essentielles.
           </InfoCard>
         </div>
       </section>
@@ -178,7 +178,7 @@ function AccueilPage() {
         <SectionHeading
           eyebrow="Actualités"
           title="Dernières informations"
-          description="Contenus de démonstration destinés à être remplacés par les communications officielles."
+          description="Les mises à jour de l'établissement et les communications importantes seront partagées ici."
         />
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {DEMO_NEWS.map((item) => (

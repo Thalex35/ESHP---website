@@ -18,11 +18,11 @@ export function PageHero({
   description: string;
 }) {
   return (
-    <section className="border-b border-border bg-primary text-primary-foreground">
+    <section className="border-b border-border bg-[#eae1d6] text-[#2d2d2d]">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:py-16">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">{eyebrow}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#5d5d5d]">{eyebrow}</p>
         <h1 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">{title}</h1>
-        <p className="mt-4 max-w-2xl text-sm text-primary-foreground/80 sm:text-base">
+        <p className="mt-4 max-w-2xl text-sm text-[#4a4a4a] sm:text-base">
           {description}
         </p>
       </div>
@@ -64,10 +64,10 @@ export function InfoCard({
   children: ReactNode;
 }) {
   return (
-    <Card className="h-full transition-shadow hover:shadow-[var(--shadow-card)]">
+    <Card className="h-full border-[#e4ddd1] bg-[#fffdfb] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)]">
       <CardHeader className="pb-2">
         {Icon ? (
-          <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-md bg-secondary text-primary">
+          <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#efe7dc] text-[#2d2d2d]">
             <Icon className="h-5 w-5" aria-hidden />
           </span>
         ) : null}
@@ -90,7 +90,7 @@ export function EventCard({
   description: string;
 }) {
   return (
-    <Card className="h-full border-l-4 border-l-accent transition-shadow hover:shadow-[var(--shadow-card)]">
+    <Card className="h-full border-l-4 border-l-[#a9a9a7] bg-[#fffdfb] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)]">
       <CardHeader className="pb-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           {date} · {location}
@@ -132,7 +132,7 @@ export function GalleryCard({
   category: string;
 }) {
   return (
-    <figure className="group overflow-hidden rounded-xl border border-border bg-card">
+    <figure className="group overflow-hidden rounded-2xl border border-[#e4ddd1] bg-[#fffdfb] shadow-sm">
       <div className="overflow-hidden">
         <img
           src={src}
@@ -164,18 +164,18 @@ export function CtaSection({
   secondary?: { to: PublicRoute; label: string };
 }) {
   return (
-    <section className="border-t border-border bg-secondary/60">
+    <section className="border-t border-[#e4ddd1] bg-[#f0e7dc]">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6 px-4 py-12">
         <div>
-          <h2 className="font-display text-2xl font-semibold">{title}</h2>
-          <p className="mt-2 max-w-xl text-sm text-muted-foreground">{description}</p>
+          <h2 className="font-display text-2xl font-semibold text-[#2d2d2d]">{title}</h2>
+          <p className="mt-2 max-w-xl text-sm text-[#4a4a4a]">{description}</p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <Button asChild size="lg">
+          <Button asChild size="lg" className="rounded-full bg-[#2d2d2d] text-[#f8f0e2] hover:bg-[#1f1f1f]">
             <Link to={primary.to}>{primary.label}</Link>
           </Button>
           {secondary ? (
-            <Button asChild size="lg" variant="outline">
+            <Button asChild size="lg" variant="outline" className="rounded-full border-[#2d2d2d] text-[#2d2d2d] hover:bg-[#f9f5ef]">
               <Link to={secondary.to}>{secondary.label}</Link>
             </Button>
           ) : null}

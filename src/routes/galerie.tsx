@@ -9,13 +9,13 @@ import { GALLERY_CATEGORIES, GALLERY_ITEMS } from "@/config/content";
 export const Route = createFileRoute("/galerie")({
   head: () => ({
     meta: [
-      { title: "Galerie — Ecole Secour d'en haut de puit-sales" },
+      { title: "Galerie — École Secour d'en haut" },
       {
         name: "description",
         content:
-          "Galerie photo de l'Ecole Secour d'en haut de puit-sales : l'école, les activités scolaires, les élèves, les événements et les installations.",
+          "Galerie photo de l'école : ses espaces, ses activités et les moments de la vie scolaire.",
       },
-      { property: "og:title", content: "Galerie — Ecole Secour d'en haut de puit-sales" },
+      { property: "og:title", content: "Galerie — École Secour d'en haut" },
       {
         property: "og:description",
         content: "Découvrez l'école en images : bâtiments, classes, activités et événements.",
@@ -39,7 +39,7 @@ function GaleriePage() {
       <PageHero
         eyebrow="En images"
         title="Galerie"
-        description="Les images présentées sont des illustrations provisoires : elles seront remplacées par les photographies officielles de l'école."
+        description="Quelques images de l'établissement et de la vie scolaire pour mieux découvrir la communauté de l'école."
       />
 
       <section className="mx-auto max-w-6xl px-4 py-14">

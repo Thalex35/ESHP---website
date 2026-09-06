@@ -14,13 +14,13 @@ import { DEMO_EVENTS, DEMO_NEWS, SCHOOL_ACTIVITIES } from "@/config/content";
 export const Route = createFileRoute("/vie-scolaire")({
   head: () => ({
     meta: [
-      { title: "Vie scolaire — Ecole Secour d'en haut de puit-sales" },
+      { title: "Vie scolaire — École Secour d'en haut" },
       {
         name: "description",
         content:
-          "Activités, événements et actualités de la vie scolaire à l'Ecole Secour d'en haut de puit-sales.",
+          "Activités, événements et actualités de la vie scolaire de l'école.",
       },
-      { property: "og:title", content: "Vie scolaire — Ecole Secour d'en haut de puit-sales" },
+      { property: "og:title", content: "Vie scolaire — École Secour d'en haut" },
       {
         property: "og:description",
         content: "Activités parascolaires, calendrier des événements et actualités de l'école.",
@@ -38,14 +38,14 @@ function VieScolairePage() {
       <PageHero
         eyebrow="Au quotidien"
         title="Vie scolaire"
-        description="Activités, événements et actualités de l'établissement. Les contenus ci-dessous sont des exemples de démonstration."
+        description="Activités, événements et actualités qui rythment la vie de l'établissement."
       />
 
       <section className="mx-auto max-w-6xl px-4 py-14">
         <SectionHeading
           eyebrow="Activités"
           title="Activités parascolaires"
-          description="Exemples d'activités, à confirmer par l'école."
+          description="Des activités qui complètent la formation et favorisent l'épanouissement des élèves."
         />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {SCHOOL_ACTIVITIES.map((activity) => (
@@ -61,7 +61,7 @@ function VieScolairePage() {
           <SectionHeading
             eyebrow="Calendrier"
             title="Événements à venir"
-            description="Ces événements sont fictifs et servent uniquement à illustrer la présentation du calendrier."
+            description="Le calendrier met en avant les moments forts de la vie de l'école et de la communauté éducative."
           />
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {DEMO_EVENTS.map((event) => (

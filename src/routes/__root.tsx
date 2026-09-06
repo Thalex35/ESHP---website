@@ -79,14 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ecole Secour d'en haut de puit-sales | Éducation et formation" },
+      { title: "École Secour d'en haut | Éducation et formation" },
       {
         name: "description",
         content:
-          "Site officiel de l'Ecole Secour d'en haut de puit-sales : présentation de l'école, sections, admissions, vie scolaire et contact.",
+          "Présentation de l'école, ses sections, ses admissions et les informations utiles pour les familles.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Ecole Secour d'en haut de puit-sales" },
+      { property: "og:site_name", content: "École Secour d'en haut" },
       { property: "og:locale", content: "fr_FR" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

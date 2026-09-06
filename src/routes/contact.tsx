@@ -15,13 +15,13 @@ import { school } from "@/config/school";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Ecole Secour d'en haut de puit-sales" },
+      { title: "Contact — École Secour d'en haut" },
       {
         name: "description",
         content:
-          "Adresse, téléphone, e-mail et horaires de l'Ecole Secour d'en haut de puit-sales, et formulaire pour écrire à l'école.",
+          "Adresse, téléphone, e-mail et horaires de l'école, ainsi qu'un formulaire pour contacter le secrétariat.",
       },
-      { property: "og:title", content: "Contact — Ecole Secour d'en haut de puit-sales" },
+      { property: "og:title", content: "Contact — École Secour d'en haut" },
       {
         property: "og:description",
         content: "Coordonnées de l'école et formulaire de contact pour les familles.",
@@ -103,7 +103,7 @@ function ContactPage() {
       <PageHero
         eyebrow="Nous joindre"
         title="Contact"
-        description="Écrivez-nous ou passez au bureau de l'école. Les coordonnées ci-dessous sont provisoires et seront confirmées par la direction."
+        description="Vous souhaitez obtenir des informations sur l'école, les inscriptions ou la vie scolaire ? Nous sommes à votre disposition."
       />
 
       <section className="mx-auto grid max-w-6xl gap-10 px-4 py-14 lg:grid-cols-[1fr_1.1fr]">

@@ -7,13 +7,13 @@ import { SCHOOL_SECTIONS } from "@/config/content";
 export const Route = createFileRoute("/nos-sections")({
   head: () => ({
     meta: [
-      { title: "Nos sections — Ecole Secour d'en haut de puit-sales" },
+      { title: "Nos sections — École Secour d'en haut" },
       {
         name: "description",
         content:
-          "Section préscolaire et fondamentale (maternelle à 6e année) et section secondaire (7e année à NS4) de l'Ecole Secour d'en haut de puit-sales.",
+          "Présentation des sections préscolaire, fondamentale et secondaire de l'école.",
       },
-      { property: "og:title", content: "Nos sections — Ecole Secour d'en haut de puit-sales" },
+      { property: "og:title", content: "Nos sections — École Secour d'en haut" },
       {
         property: "og:description",
         content: "De la maternelle à la NS4 : l'organisation pédagogique de l'école.",
