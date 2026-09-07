@@ -1,5 +1,6 @@
-import { school } from "@/config/school";
+import { getSiteConfig, loadSiteConfig, type SiteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface SchoolLogoProps {
   className?: string;
@@ -15,11 +16,19 @@ interface SchoolLogoProps {
  * `src/config/school.ts` to rebrand the whole application.
  */
 export function SchoolLogo({ className, withName = true, inverted, size = "md" }: SchoolLogoProps) {
+  const [siteConfig, setSiteConfig] = useState<SiteConfig>(getSiteConfig());
+
+  useEffect(() => {
+    const sync = async () => setSiteConfig(await loadSiteConfig());
+    window.addEventListener("site-config:updated", sync);
+    return () => window.removeEventListener("site-config:updated", sync);
+  }, []);
+
   return (
     <span className={cn("flex items-center gap-2.5", className)}>
       <img
-        src={school.images.logo}
-        alt={school.images.logoAlt}
+        src={siteConfig.logoImage}
+        alt={siteConfig.logoAlt}
         width={512}
         height={512}
         className={cn(
@@ -36,7 +45,7 @@ export function SchoolLogo({ className, withName = true, inverted, size = "md" }
               inverted ? "text-sidebar-foreground" : "text-foreground",
             )}
           >
-            {school.shortName}
+            {siteConfig.shortName}
           </span>
           <span
             className={cn(
@@ -44,7 +53,7 @@ export function SchoolLogo({ className, withName = true, inverted, size = "md" }
               inverted ? "text-sidebar-foreground/70" : "text-muted-foreground",
             )}
           >
-            {school.locality}
+            {siteConfig.locality}
           </span>
         </span>
       ) : null}

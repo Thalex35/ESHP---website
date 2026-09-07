@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { PublicLayout } from "@/components/public/PublicLayout";
 import { CtaSection, GalleryCard, PageHero } from "@/components/public/sections";
 import { Button } from "@/components/ui/button";
-import { GALLERY_CATEGORIES, GALLERY_ITEMS } from "@/config/content";
+import { getSiteConfig, loadSiteConfig, type SiteConfig } from "@/lib/site-config";
 
 export const Route = createFileRoute("/galerie")({
   head: () => ({
@@ -31,20 +31,27 @@ const TOUTES = "Toutes";
 
 function GaleriePage() {
   const [active, setActive] = useState<string>(TOUTES);
+  const [siteConfig, setSiteConfig] = useState<SiteConfig>(getSiteConfig());
+  useEffect(() => {
+    const sync = async () => setSiteConfig(await loadSiteConfig());
+    sync();
+    window.addEventListener("site-config:updated", sync);
+    return () => window.removeEventListener("site-config:updated", sync);
+  }, []);
   const items =
-    active === TOUTES ? GALLERY_ITEMS : GALLERY_ITEMS.filter((item) => item.category === active);
+    active === TOUTES ? siteConfig.pageContent.galleryItems : siteConfig.pageContent.galleryItems.filter((item) => item.category === active);
 
   return (
     <PublicLayout>
       <PageHero
-        eyebrow="En images"
-        title="Galerie"
-        description="Quelques images de l'établissement et de la vie scolaire pour mieux découvrir la communauté de l'école."
+        eyebrow={siteConfig.pageContent.gallery.eyebrow}
+        title={siteConfig.pageContent.gallery.title}
+        description={siteConfig.pageContent.gallery.intro}
       />
 
       <section className="mx-auto max-w-6xl px-4 py-14">
         <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrer par catégorie">
-          {[TOUTES, ...GALLERY_CATEGORIES].map((category) => (
+          {[TOUTES, ...siteConfig.pageContent.galleryCategories].map((category) => (
             <Button
               key={category}
               size="sm"
@@ -71,8 +78,8 @@ function GaleriePage() {
       </section>
 
       <CtaSection
-        title="Vous voulez en savoir plus sur l'école ?"
-        description="Contactez-nous ou consultez la présentation de l'établissement."
+        title={siteConfig.pageContent.gallery.ctaTitle}
+        description={siteConfig.pageContent.gallery.ctaText}
         primary={{ to: "/contact", label: "Nous contacter" }}
         secondary={{ to: "/a-propos", label: "À propos de l'école" }}
       />

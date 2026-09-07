@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 import { PublicLayout } from "@/components/public/PublicLayout";
 import {
@@ -9,7 +10,7 @@ import {
   PageHero,
   SectionHeading,
 } from "@/components/public/sections";
-import { DEMO_EVENTS, DEMO_NEWS, SCHOOL_ACTIVITIES } from "@/config/content";
+import { getSiteConfig, loadSiteConfig, type SiteConfig } from "@/lib/site-config";
 
 export const Route = createFileRoute("/vie-scolaire")({
   head: () => ({
@@ -33,22 +34,30 @@ export const Route = createFileRoute("/vie-scolaire")({
 });
 
 function VieScolairePage() {
+  const [siteConfig, setSiteConfig] = useState<SiteConfig>(getSiteConfig());
+  useEffect(() => {
+    const sync = async () => setSiteConfig(await loadSiteConfig());
+    sync();
+    window.addEventListener("site-config:updated", sync);
+    return () => window.removeEventListener("site-config:updated", sync);
+  }, []);
+
   return (
     <PublicLayout>
       <PageHero
-        eyebrow="Au quotidien"
-        title="Vie scolaire"
-        description="Activités, événements et actualités qui rythment la vie de l'établissement."
+        eyebrow={siteConfig.pageContent.studentLife.eyebrow}
+        title={siteConfig.pageContent.studentLife.title}
+        description={siteConfig.pageContent.studentLife.intro}
       />
 
       <section className="mx-auto max-w-6xl px-4 py-14">
         <SectionHeading
           eyebrow="Activités"
-          title="Activités parascolaires"
-          description="Des activités qui complètent la formation et favorisent l'épanouissement des élèves."
+          title={siteConfig.pageContent.studentLife.activitiesTitle}
+          description={siteConfig.pageContent.studentLife.activitiesText}
         />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {SCHOOL_ACTIVITIES.map((activity) => (
+          {siteConfig.pageContent.activities.map((activity) => (
             <InfoCard key={activity.title} title={activity.title}>
               {activity.description}
             </InfoCard>
@@ -60,11 +69,11 @@ function VieScolairePage() {
         <div className="mx-auto max-w-6xl px-4 py-14">
           <SectionHeading
             eyebrow="Calendrier"
-            title="Événements à venir"
-            description="Le calendrier met en avant les moments forts de la vie de l'école et de la communauté éducative."
+            title={siteConfig.pageContent.studentLife.eventsTitle}
+            description={siteConfig.pageContent.studentLife.eventsText}
           />
           <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {DEMO_EVENTS.map((event) => (
+            {siteConfig.pageContent.events.map((event) => (
               <EventCard key={event.title} {...event} />
             ))}
           </div>
@@ -74,19 +83,19 @@ function VieScolairePage() {
       <section className="mx-auto max-w-6xl px-4 py-14">
         <SectionHeading
           eyebrow="Actualités"
-          title="Nouvelles de l'école"
-          description="Espace réservé aux communications officielles de la direction."
+          title={siteConfig.pageContent.studentLife.newsTitle}
+          description={siteConfig.pageContent.studentLife.newsText}
         />
         <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {DEMO_NEWS.map((item) => (
+          {siteConfig.pageContent.news.map((item) => (
             <NewsCard key={item.title} {...item} />
           ))}
         </div>
       </section>
 
       <CtaSection
-        title="Envie de voir l'école en images ?"
-        description="La galerie présente les espaces et les moments de la vie de l'établissement."
+        title={siteConfig.pageContent.studentLife.ctaTitle}
+        description={siteConfig.pageContent.studentLife.ctaText}
         primary={{ to: "/galerie", label: "Voir la galerie" }}
         secondary={{ to: "/contact", label: "Nous contacter" }}
       />

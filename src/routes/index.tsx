@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BookOpen, CalendarDays, GraduationCap, Users } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { PublicLayout } from "@/components/public/PublicLayout";
 import {
@@ -18,7 +19,7 @@ import {
   SCHOOL_SECTIONS,
   SCHOOL_VALUES,
 } from "@/config/content";
-import { school } from "@/config/school";
+import { getSiteConfig, loadSiteConfig } from "@/lib/site-config";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -43,7 +44,15 @@ export const Route = createFileRoute("/")({
 });
 
 function AccueilPage() {
+  const [siteConfig, setSiteConfig] = useState(getSiteConfig());
   const galleryPreview = GALLERY_ITEMS.slice(0, 3);
+
+  useEffect(() => {
+    const sync = async () => setSiteConfig(await loadSiteConfig());
+    sync();
+    window.addEventListener("site-config:updated", sync);
+    return () => window.removeEventListener("site-config:updated", sync);
+  }, []);
 
   return (
     <PublicLayout>
@@ -51,12 +60,12 @@ function AccueilPage() {
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 lg:grid-cols-2 lg:py-20">
           <div className="animate-fade-up">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              Présentation de l'établissement
+              {siteConfig.pageContent.home.eyebrow}
             </p>
             <h1 className="mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-              {school.name}
+              {siteConfig.schoolName}
             </h1>
-            <p className="mt-4 max-w-xl text-base text-muted-foreground">{school.tagline}</p>
+            <p className="mt-4 max-w-xl text-base text-muted-foreground">{siteConfig.tagline}</p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Button asChild size="lg">
                 <Link to="/a-propos">Découvrir notre école</Link>
@@ -66,10 +75,10 @@ function AccueilPage() {
               </Button>
             </div>
           </div>
-          <div className="overflow-hidden rounded-xl border border-border shadow-[var(--shadow-card)]">
+          <div className="overflow-hidden rounded-xl border border-border shadow-(--shadow-card)">
             <img
-              src={school.images.hero}
-              alt={school.images.heroAlt}
+              src={siteConfig.heroImage}
+              alt={siteConfig.heroAlt}
               width={1600}
               height={900}
               className="h-full w-full object-cover"
@@ -81,8 +90,8 @@ function AccueilPage() {
       <section className="mx-auto max-w-6xl px-4 py-14">
         <SectionHeading
           eyebrow="Notre école"
-          title="Un établissement au service des familles"
-          description="Une école qui accompagne chaque élève dans son développement, sa formation et son avenir."
+          title={siteConfig.pageContent.home.aboutTitle}
+          description={siteConfig.pageContent.home.aboutText}
         />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <InfoCard icon={BookOpen} title="Un parcours complet">
@@ -101,14 +110,14 @@ function AccueilPage() {
         <div className="mx-auto max-w-6xl px-4 py-14">
           <SectionHeading
             eyebrow="Nos sections"
-            title="Deux sections, un même exigence"
-            description="L'école accueille les élèves du préscolaire jusqu'à la fin du secondaire."
+            title={siteConfig.pageContent.home.sectionsTitle}
+            description={siteConfig.pageContent.home.sectionsText}
           />
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {SCHOOL_SECTIONS.map((section) => (
               <article
                 key={section.slug}
-                className="rounded-xl border border-border bg-card p-6 transition-shadow hover:shadow-[var(--shadow-card)]"
+                className="rounded-xl border border-border bg-card p-6 transition-shadow hover:shadow-(--shadow-card)"
               >
                 <h3 className="font-display text-lg font-semibold">{section.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{section.summary}</p>

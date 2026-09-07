@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -10,7 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { school } from "@/config/school";
+import { getSiteConfig, loadSiteConfig } from "@/lib/site-config";
+import { addMessage } from "@/lib/admin-data";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -64,17 +65,25 @@ const contactSchema = z.object({
 
 type FieldName = keyof z.infer<typeof contactSchema>;
 
-const CONTACT_DETAILS = [
-  { icon: MapPin, label: "Adresse", value: school.contact.address },
-  { icon: Phone, label: "Téléphone", value: school.contact.phone },
-  { icon: Mail, label: "E-mail", value: school.contact.email },
-  { icon: Clock, label: "Horaires", value: school.contact.hours },
-];
-
 function ContactPage() {
+  const [siteConfig, setSiteConfig] = useState(getSiteConfig());
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    const sync = async () => setSiteConfig(await loadSiteConfig());
+    sync();
+    window.addEventListener("site-config:updated", sync);
+    return () => window.removeEventListener("site-config:updated", sync);
+  }, []);
+
+  const CONTACT_DETAILS = [
+    { icon: MapPin, label: "Adresse", value: siteConfig.contact.address },
+    { icon: Phone, label: "Téléphone", value: siteConfig.contact.phone },
+    { icon: Mail, label: "E-mail", value: siteConfig.contact.email },
+    { icon: Clock, label: "Horaires", value: siteConfig.contact.hours },
+  ];
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = Object.fromEntries(new FormData(form));
@@ -92,23 +101,33 @@ function ContactPage() {
     }
 
     setErrors({});
+    try {
+      await addMessage({
+        name: String(data.nom),
+        email: String(data.email),
+        phone: String(data.telephone ?? ""),
+        subject: String(data.sujet),
+        message: String(data.message),
+      });
+    } catch {
+      toast.error("Impossible d'envoyer le message. Vérifiez la connexion au service.");
+      return;
+    }
     form.reset();
-    toast.success(
-      "Merci ! Votre message a bien été pris en compte. L'envoi automatique n'est pas encore activé : contactez également l'école par téléphone.",
-    );
+    toast.success("Merci ! Votre message a bien été pris en compte. L'équipe de l'école le recevra dans le panneau d'administration.");
   }
 
   return (
     <PublicLayout>
       <PageHero
-        eyebrow="Nous joindre"
-        title="Contact"
-        description="Vous souhaitez obtenir des informations sur l'école, les inscriptions ou la vie scolaire ? Nous sommes à votre disposition."
+        eyebrow={siteConfig.pageContent.contact.eyebrow}
+        title={siteConfig.pageContent.contact.title}
+        description={siteConfig.pageContent.contact.intro}
       />
 
       <section className="mx-auto grid max-w-6xl gap-10 px-4 py-14 lg:grid-cols-[1fr_1.1fr]">
         <div>
-          <SectionHeading title="Coordonnées de l'école" />
+          <SectionHeading title={siteConfig.pageContent.contact.locationTitle} />
           <ul className="mt-6 space-y-4">
             {CONTACT_DETAILS.map((detail) => (
               <li key={detail.label} className="flex gap-3">
@@ -124,17 +143,15 @@ function ContactPage() {
           </ul>
 
           <div className="mt-8 rounded-xl border border-border bg-secondary/60 p-5 text-sm text-muted-foreground">
-            <p className="font-medium text-foreground">Localisation</p>
-            <p className="mt-1">
-              Le plan d'accès sera ajouté dès que l'adresse exacte de l'école aura été communiquée.
-            </p>
+            <p className="font-medium text-foreground">{siteConfig.pageContent.contact.locationTitle}</p>
+            <p className="mt-1">{siteConfig.pageContent.contact.locationText}</p>
           </div>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
-          <h2 className="font-display text-xl font-semibold">Envoyer un message</h2>
+        <div className="rounded-xl border border-border bg-card p-6 shadow-(--shadow-card)">
+          <h2 className="font-display text-xl font-semibold">{siteConfig.pageContent.contact.formTitle}</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Tous les champs marqués d'un astérisque sont obligatoires.
+            {siteConfig.pageContent.contact.formText}
           </p>
 
           <form className="mt-6 space-y-4" onSubmit={handleSubmit} noValidate>
@@ -176,8 +193,7 @@ function ContactPage() {
               Envoyer le message
             </Button>
             <p className="text-xs text-muted-foreground">
-              L'envoi automatique des messages n'est pas encore activé : vos informations ne sont
-              pas transmises par ce formulaire pour le moment.
+              Votre message sera visible dans la boîte de réception de l'administration de ce navigateur.
             </p>
           </form>
         </div>
