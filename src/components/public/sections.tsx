@@ -64,7 +64,7 @@ export function InfoCard({
   children: ReactNode;
 }) {
   return (
-    <Card className="h-full border-[#e4ddd1] bg-[#fffdfb] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)]">
+    <Card className="h-full border-[#e4ddd1] bg-[#fffdfb] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-(--shadow-card)">
       <CardHeader className="pb-2">
         {Icon ? (
           <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#efe7dc] text-[#2d2d2d]">
@@ -90,7 +90,7 @@ export function EventCard({
   description: string;
 }) {
   return (
-    <Card className="h-full border-l-4 border-l-[#a9a9a7] bg-[#fffdfb] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card)]">
+    <Card className="h-full border-l-4 border-l-[#a9a9a7] bg-[#fffdfb] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-(--shadow-card)">
       <CardHeader className="pb-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           {date} · {location}
@@ -112,7 +112,7 @@ export function NewsCard({
   excerpt: string;
 }) {
   return (
-    <Card className="h-full transition-shadow hover:shadow-[var(--shadow-card)]">
+    <Card className="h-full transition-shadow hover:shadow-(--shadow-card)">
       <CardHeader className="pb-2">
         <p className="text-xs text-muted-foreground">{date}</p>
         <CardTitle className="text-base">{title}</CardTitle>

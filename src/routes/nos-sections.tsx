@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 import { PublicLayout } from "@/components/public/PublicLayout";
 import { CtaSection, PageHero, SectionHeading } from "@/components/public/sections";
-import { SCHOOL_SECTIONS } from "@/config/content";
+import { getSiteConfig, loadSiteConfig, type SiteConfig } from "@/lib/site-config";
 
 export const Route = createFileRoute("/nos-sections")({
   head: () => ({
@@ -26,19 +27,27 @@ export const Route = createFileRoute("/nos-sections")({
 });
 
 function NosSectionsPage() {
+  const [siteConfig, setSiteConfig] = useState<SiteConfig>(getSiteConfig());
+  useEffect(() => {
+    const sync = async () => setSiteConfig(await loadSiteConfig());
+    sync();
+    window.addEventListener("site-config:updated", sync);
+    return () => window.removeEventListener("site-config:updated", sync);
+  }, []);
+
   return (
     <PublicLayout>
       <PageHero
-        eyebrow="Organisation pédagogique"
-        title="Nos sections"
-        description="L'école est organisée en deux sections, du préscolaire jusqu'à la fin du secondaire."
+        eyebrow={siteConfig.pageContent.sections.eyebrow}
+        title={siteConfig.pageContent.sections.title}
+        description={siteConfig.pageContent.sections.intro}
       />
 
       <section className="mx-auto max-w-6xl space-y-10 px-4 py-14">
-        {SCHOOL_SECTIONS.map((section, index) => (
+        {siteConfig.pageContent.sectionsList.map((section, index) => (
           <article
             key={section.slug}
-            className="rounded-xl border border-border bg-card p-6 shadow-[var(--shadow-card)] sm:p-8"
+            className="rounded-xl border border-border bg-card p-6 shadow-(--shadow-card) sm:p-8"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-foreground">
               Section {index + 1}
@@ -64,15 +73,15 @@ function NosSectionsPage() {
 
         <div>
           <SectionHeading
-            title="Informations complémentaires"
-            description="Les horaires, effectifs par classe et programmes détaillés seront ajoutés ici dès leur communication par la direction."
+            title={siteConfig.pageContent.sections.infoTitle}
+            description={siteConfig.pageContent.sections.infoText}
           />
         </div>
       </section>
 
       <CtaSection
-        title="Vous cherchez la classe adaptée à votre enfant ?"
-        description="Contactez le secrétariat pour connaître les places disponibles par niveau."
+        title={siteConfig.pageContent.sections.ctaTitle}
+        description={siteConfig.pageContent.sections.ctaText}
         primary={{ to: "/contact", label: "Demander des informations" }}
         secondary={{ to: "/admissions", label: "Voir les admissions" }}
       />

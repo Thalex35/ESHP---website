@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 import { PublicLayout } from "@/components/public/PublicLayout";
 import { CtaSection, PageHero, SectionHeading } from "@/components/public/sections";
 import { ADMISSION_BLOCKS } from "@/config/content";
-import { school } from "@/config/school";
+import { getSiteConfig, loadSiteConfig } from "@/lib/site-config";
 
 export const Route = createFileRoute("/admissions")({
   head: () => ({
@@ -27,12 +28,20 @@ export const Route = createFileRoute("/admissions")({
 });
 
 function AdmissionsPage() {
+  const [siteConfig, setSiteConfig] = useState(getSiteConfig());
+
+  useEffect(() => {
+    const sync = async () => setSiteConfig(await loadSiteConfig());
+    window.addEventListener("site-config:updated", sync);
+    return () => window.removeEventListener("site-config:updated", sync);
+  }, []);
+
   return (
     <PublicLayout>
       <PageHero
-        eyebrow="Inscriptions"
-        title="Admissions"
-        description="Retrouvez ici les informations nécessaires pour inscrire votre enfant. Les éléments marqués « à confirmer » seront précisés par la direction."
+        eyebrow={siteConfig.pageContent.admissions.eyebrow}
+        title={siteConfig.pageContent.admissions.title}
+        description={siteConfig.pageContent.admissions.intro}
       />
 
       <section className="mx-auto max-w-6xl px-4 py-14">
@@ -40,7 +49,7 @@ function AdmissionsPage() {
           {ADMISSION_BLOCKS.map((block) => (
             <article
               key={block.title}
-              className="rounded-xl border border-border bg-card p-6 shadow-[var(--shadow-card)]"
+              className="rounded-xl border border-border bg-card p-6 shadow-(--shadow-card)"
             >
               <h2 className="font-display text-lg font-semibold">{block.title}</h2>
               <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
@@ -57,21 +66,21 @@ function AdmissionsPage() {
 
         <div className="mt-12 rounded-xl border border-border bg-secondary/60 p-6">
           <SectionHeading
-            title="Où déposer un dossier ?"
-            description="Les inscriptions se font uniquement au bureau de l'école."
+            title={siteConfig.pageContent.admissions.depositTitle}
+            description={siteConfig.pageContent.admissions.depositText}
           />
           <ul className="mt-4 space-y-1 text-sm text-muted-foreground">
-            <li>{school.contact.address}</li>
-            <li>{school.contact.phone}</li>
-            <li>{school.contact.email}</li>
-            <li>{school.contact.hours}</li>
+            <li>{siteConfig.contact.address}</li>
+            <li>{siteConfig.contact.phone}</li>
+            <li>{siteConfig.contact.email}</li>
+            <li>{siteConfig.contact.hours}</li>
           </ul>
         </div>
       </section>
 
       <CtaSection
-        title="Prêt à commencer une inscription ?"
-        description="Écrivez-nous pour recevoir la liste complète des pièces à fournir."
+        title={siteConfig.pageContent.admissions.ctaTitle}
+        description={siteConfig.pageContent.admissions.ctaText}
         primary={{ to: "/contact", label: "Contacter le secrétariat" }}
         secondary={{ to: "/nos-sections", label: "Voir nos sections" }}
       />

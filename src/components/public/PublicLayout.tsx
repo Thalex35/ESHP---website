@@ -1,15 +1,22 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Menu, Phone } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import { SchoolLogo } from "@/components/branding/SchoolLogo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { NAV_LINKS } from "@/config/navigation";
-import { school } from "@/config/school";
+import { getSiteConfig, loadSiteConfig, type SiteConfig } from "@/lib/site-config";
 
 export function PublicLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const [siteConfig, setSiteConfig] = useState<SiteConfig>(getSiteConfig());
+
+  useEffect(() => {
+    const sync = async () => setSiteConfig(await loadSiteConfig());
+    window.addEventListener("site-config:updated", sync);
+    return () => window.removeEventListener("site-config:updated", sync);
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -91,12 +98,20 @@ export function PublicLayout({ children }: { children: ReactNode }) {
 }
 
 function SiteFooter() {
+  const [siteConfig, setSiteConfig] = useState<SiteConfig>(getSiteConfig());
+
+  useEffect(() => {
+    const sync = async () => setSiteConfig(await loadSiteConfig());
+    window.addEventListener("site-config:updated", sync);
+    return () => window.removeEventListener("site-config:updated", sync);
+  }, []);
+
   return (
     <footer className="border-t border-border bg-[#2d2d2d] text-[#f8f0e2]">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-1">
-          <p className="font-display text-lg font-semibold">{school.name}</p>
-          <p className="mt-3 max-w-xs text-sm text-[#f8f0e2]/80">{school.tagline}</p>
+          <p className="font-display text-lg font-semibold">{siteConfig.schoolName}</p>
+          <p className="mt-3 max-w-xs text-sm text-[#f8f0e2]/80">{siteConfig.tagline}</p>
         </div>
 
         <nav aria-label="Navigation du pied de page">
@@ -120,18 +135,18 @@ function SiteFooter() {
           <ul className="mt-4 space-y-3 text-sm text-[#f8f0e2]/80">
             <li className="flex gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#d9d3ca]" aria-hidden />
-              <span>{school.contact.address}</span>
+              <span>{siteConfig.contact.address}</span>
             </li>
             <li className="flex gap-2">
               <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#d9d3ca]" aria-hidden />
-              <a href={`tel:${school.contact.phone.replace(/\s/g, "")}`} className="hover:text-white">
-                {school.contact.phone}
+              <a href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`} className="hover:text-white">
+                {siteConfig.contact.phone}
               </a>
             </li>
             <li className="flex gap-2">
               <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#d9d3ca]" aria-hidden />
-              <a href={`mailto:${school.contact.email}`} className="hover:text-white">
-                {school.contact.email}
+              <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-white">
+                {siteConfig.contact.email}
               </a>
             </li>
           </ul>
@@ -142,7 +157,11 @@ function SiteFooter() {
             Réseaux sociaux
           </h2>
           <ul className="mt-4 space-y-2 text-sm text-[#f8f0e2]/70">
-            {school.social.map((item) => (
+            {[
+              { label: "Facebook", href: null },
+              { label: "Instagram", href: null },
+              { label: "WhatsApp", href: null },
+            ].map((item) => (
               <li key={item.label}>
                 {item.href ? (
                   <a
@@ -163,7 +182,7 @@ function SiteFooter() {
       </div>
 
       <div className="border-t border-[#f8f0e2]/15 px-4 py-5 text-center text-xs text-[#f8f0e2]/70">
-        © {new Date().getFullYear()} {school.name}. Tous droits réservés.
+        © {new Date().getFullYear()} {siteConfig.schoolName}. Tous droits réservés.
       </div>
     </footer>
   );
